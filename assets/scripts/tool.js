@@ -8,6 +8,16 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
+window.animState = cc.Enum({
+    idle:-1,
+    appear:-1,
+    disappear:-1,
+    dig:-1,
+    strong:-1,
+    throw:-1,
+})
+
+
 let tooljs = cc.Class({
     extends: cc.Component,
 
@@ -19,6 +29,7 @@ let tooljs = cc.Class({
         claw:cc.Node,
         maxRopeLength:0,
         minRopeLength:0,
+        animCom:cc.Animation,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -29,6 +40,9 @@ let tooljs = cc.Class({
 
         this.isExpanding = false;
         this.isRotating = true;
+
+        this.animState = window.animState.idle;
+        this.animCom.play('miner-appear');
     },
 
     start () {
