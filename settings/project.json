@@ -13,11 +13,18 @@
     [
       false,
       false,
+      true,
       true
     ],
     [
       false,
       true,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
       false
     ]
   ],
@@ -29,7 +36,8 @@
   "group-list": [
     "default",
     "claw",
-    "wall"
+    "wall",
+    "stone"
   ],
   "simulator-orientation": false,
   "simulator-resolution": {
@@ -37,6 +45,5 @@
     "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": false,
-  "start-scene": "current"
+  "use-project-simulator-setting": false
 }

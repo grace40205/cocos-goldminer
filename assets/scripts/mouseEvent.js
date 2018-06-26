@@ -25,8 +25,15 @@ cc.Class({
         
 
         this.node.on(cc.Node.EventType.MOUSE_DOWN, function (event) {
-            this.toolJs.isRotating = !this.toolJs.isRotating;
-            this.toolJs.isExpanding = !this.toolJs.isExpanding;
+            // this.toolJs.isRotating = !this.toolJs.isRotating;
+            // this.toolJs.isExpanding = !this.toolJs.isExpanding;
+
+            if( cc.dm.animState.idle === this.toolJs.animState){
+                this.toolJs.changeAnimState( cc.dm.animState.expand);
+            } else if(cc.dm.animState.expand === this.toolJs.animState){
+                this.toolJs.changeAnimState(cc.dm.animState.idle);
+            }
+
           }, this);
     },
 

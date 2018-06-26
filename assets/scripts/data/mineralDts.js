@@ -8,28 +8,34 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-cc.Class({
-    extends: cc.Component,
-
-    properties: {     
+let mineral ={
+    mineralArray:[
+        {
+            id: 1,
+            name: 'gold',
+            score: 20,
+            pullSpeed: 10,
+        },
+        {
+            id: 2,
+            name: 'stone',
+            score: 0,
+            pullSpeed: 40,
+        },
+        {
+            id: 3,
+            name: 'diamond',
+            score: 60,
+            pullSpeed: 10,
+        },
+    
+    ],
+    getMineralById(id){
+        return this.mineralArray[id];
     },
+    getMineralSize(){
+        return this.mineralArray.length;
+    }
+}
 
-    // LIFE-CYCLE CALLBACKS:
-
-    onLoad () {
-        var manager = cc.director.getCollisionManager();
-        manager.enabled = true;
-        manager.enabledDebugDraw = true;
-        manager.enabledDrawBoundingBox = true;
-
-        cc.dm = {};
-        cc.dm.mineralDts = require('mineralDts');
-        cc.dm.animState = require('enums');
-    },
-
-    start () {
-
-    },
-
-    // update (dt) {},
-});
+module.exports = mineral;

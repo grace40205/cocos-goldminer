@@ -8,38 +8,20 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
-let dataManager = {
+let animState = cc.Enum({
+    idle:-1, // 不停旋转
+    expand:-1, // 放绳子
+    appear:-1,
+    disappear:-1,
+    dig:-1,
+    strong:-1,
+    throw:-1, 
+    pullHeavy:-1,
+    pullLight:-1,
+    pullNone:-1,
+    happy:-1,
+    sad:-1,
+    catch:-1, // 爪子抓取
+});
 
-}
-
-let mineral ={
-    mineralArray:[
-        {
-            id: 1,
-            name: 'gold',
-            score: 20,
-            pullSpeed: 10,
-        },
-        {
-            id: 2,
-            name: 'stone',
-            score: 0,
-            pullSpeed: 40,
-        },
-        {
-            id: 3,
-            name: 'diamond',
-            score: 60,
-            pullSpeed: 10,
-        },
-    
-    ],
-    getMineralById(id){
-        return this.mineralArray[id];
-    },
-    getMineralSize(){
-        return this.mineralArray.length;
-    }
-
-
-}
+module.exports = animState;

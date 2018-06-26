@@ -27,8 +27,24 @@ cc.Class({
     },
     
     onCollisionEnter(other,self){
-        console.log('oncollitionenter');
-        this.toolJs.expandSpeed *= -1;
+        if(0 === other.tag){
+            console.log('collided wall');
+            
+            this.toolJs.changeAnimState(cc.dm.animState.pullNone);
+
+        } else if(1 === other.tag){
+            console.log('collided stone');
+
+            // 拾取
+            // claw动作
+            this.toolJs.changeAnimState( cc.dm.animState.catch);
+
+            self.node.getChildByName('pickee').getComponent(cc.Sprite).spriteFrame =
+            other.node.getComponent(cc.Sprite).spriteFrame;
+
+            // 销毁
+            other.node.destroy();
+        }       
     },
 
     // update (dt) {},
