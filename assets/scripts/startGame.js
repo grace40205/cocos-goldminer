@@ -17,14 +17,33 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        var manager = cc.director.getCollisionManager();
+        manager.enabled = true;
+        manager.enabledDebugDraw = true;
+        manager.enabledDrawBoundingBox = true;
+
+        cc.dm = {};
+        cc.dm.mineralDts = require('mineralDts');
+        cc.dm.animState = require('enums');
+    },
 
     start () {
 
     },
     
-    startGame(){
+    startGame(){                
         cc.director.loadScene("game");
+    },
+
+    setLevel0(){
+        cc.dm.curLevel = 0;
+        this.startGame();
+    },
+
+    setLevel1(){
+        cc.dm.curLevel = 1;
+        this.startGame();
     },
 
     // update (dt) {},

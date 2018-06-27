@@ -45,22 +45,21 @@ let tooljs = cc.Class({
     },
 
     setCatchAction(isLeft){
-        // var open = cc.rotateBy(0.2,
-        // 20).easing(cc.easeCubicActionOut());
-        // var close = cc.rotateBy(0.2,
-        // -20).easing(cc.easeCubicActionIn());
-
         if(isLeft === true){
             var open = cc.rotateBy(this.catchDuration,
                 this.catchDegree).easing(cc.easeCubicActionOut());
-                var close = cc.rotateTo(this.catchDuration,
+
+            var close = cc.rotateTo(this.catchDuration,
                 0).easing(cc.easeCubicActionIn());
+
             return cc.repeat(cc.sequence(open,close),1);
         } else {
             var open = cc.rotateBy(this.catchDuration,
                 -this.catchDegree).easing(cc.easeCubicActionOut());
-                var close = cc.rotateTo(this.catchDuration,
+            
+            var close = cc.rotateTo(this.catchDuration,
                 0).easing(cc.easeCubicActionIn());
+
             return cc.repeat(cc.sequence(open,close),1);
         }
     },
@@ -81,6 +80,8 @@ let tooljs = cc.Class({
             // play catch animation
             this.claw.getChildByName('clawL').runAction(this.lCatchAction);
             this.claw.getChildByName('clawR').runAction(this.rCatchAction);
+            
+            this.animState =  cc.dm.animState.pullNone;
         }
     },
 

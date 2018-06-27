@@ -10,12 +10,14 @@
 
 let toolJs = require('tool');
 let minerals = require('mineralDts');
+let gameJs = require('game');
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        toolJs:toolJs,         
+        toolJs:toolJs,    
+        gameJs:gameJs,     
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -35,19 +37,23 @@ cc.Class({
             this.toolJs.changeAnimState(cc.dm.animState.pullNone);
 
         } else {
-            console.log('collided mineral:' + this.minerals.getMineralByTag(other.tag).name);
+            let mineral =  this.minerals.getMineralByTag(other.tag);
+            console.log('collided mineral:' + mineral.name);
 
             // 拾取
             // claw动作
             this.toolJs.changeAnimState( cc.dm.animState.catch);
 
             // 改变绳子拉取速度
-            this.toolJs.speed = this.minerals.getMineralByTag(other.tag).pullSpeed;
-            this.toolJs.changeAnimState( cc.dm.animState.pull);
+            this.toolJs.speed = mineral.pullSpeed;
+            //this.toolJs.changeAnimState( cc.dm.animState.pull);
 
             self.node.getChildByName('pickee').getComponent(cc.Sprite).spriteFrame =
             other.node.getComponent(cc.Sprite).spriteFrame;
             
+            // 加分
+            this.gameJs.gainScore(mineral.score);
+
             // 销毁
             other.node.destroy();
             
