@@ -39,9 +39,16 @@ let gameJs = cc.Class({
     onLoad () {        
         var curLevel = levels.getLevelById(cc.dm.curLevel);
 
-        // 设置过关分数、时间要求
-        this.node.getChildByName('time').getComponent(cc.Label).string = 'Time: ' + curLevel.timeLimit;
+        // 设置过关分数要求
         this.node.getChildByName('score').getComponent(cc.Label).string = 'Score: ' + curLevel.passScore;
+        
+        // 设置当前分数、时间
+        this.score = 0;
+        this.updateScore(0);
+        this.time = curLevel.timeLimit;
+        this.updateTime(0);
+
+        // 通过获取Label组件的方式设置分数、时间
         // this.time.string = 'Time: ' + curLevel.timeLimit;
         // this.score.string = 'Time: ' + curLevel.passScore;
 
@@ -49,17 +56,23 @@ let gameJs = cc.Class({
         this.node.getChildByName('level').addChild(cc.instantiate(this.mineralMgrPrefabs[index]));
 
 
-        // 设置分数
-        this.score = 0;
-        this.gainScore(0);
+
+        
 
         // 随机生成矿石
         //this.spawnNewStones();
     },
 
-    gainScore(score){
+    updateScore(score){
         this.score += score;
         this.node.getChildByName('curScore').getComponent(cc.Label).string = 'CurScore: ' + this.score;
+    },
+
+    updateTime(dt){
+        this.time -= dt;    
+        //this.time = Math.floor(this.time);
+        let time = Math.floor(this.time * 10) / 10;
+        this.node.getChildByName('time').getComponent(cc.Label).string = 'Time: ' + time;
     },
 
     start () {
@@ -89,7 +102,10 @@ let gameJs = cc.Class({
         randX = cc.random0To1() * maxX;
         return cc.p(randX,randY);
     },
-    // update (dt) {},
+
+    update (dt) {
+        this.updateTime(dt);
+    },
 });
 
 module.exports = gameJs;

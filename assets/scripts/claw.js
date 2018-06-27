@@ -52,7 +52,7 @@ cc.Class({
             other.node.getComponent(cc.Sprite).spriteFrame;
             
             // 加分
-            this.gameJs.gainScore(mineral.score);
+            this.gameJs.updateScore(mineral.score);
 
             // 销毁
             other.node.destroy();
