@@ -35,14 +35,13 @@ let tooljs = cc.Class({
         this.rope = this.node.getChildByName('rope');
         this.claw = this.node.getChildByName('claw');
 
-        this.isExpanding = false;
-        this.isRotating = true;
-
         this.animState = cc.dm.animState.idle;
         this.animCom.play('miner-appear');
 
         this.lCatchAction = this.setCatchAction(true);
         this.rCatchAction = this.setCatchAction(false);
+
+        this.speed = this.expandSpeed;
     },
 
     setCatchAction(isLeft){
@@ -75,29 +74,28 @@ let tooljs = cc.Class({
             return;
         }
         this.animState = state;
-    },
 
-    update (dt) {
         if( cc.dm.animState.catch === this.animState){
             console.log('catch start.');
 
             // play catch animation
             this.claw.getChildByName('clawL').runAction(this.lCatchAction);
             this.claw.getChildByName('clawR').runAction(this.rCatchAction);
-
-            this.animState =  cc.dm.animState.pullNone;
         }
-        
+    },
+
+    update (dt) {              
         if(cc.dm.animState.expand === this.animState){
-            this.rope.height += this.expandSpeed * dt;
-            this.claw.y -= this.expandSpeed * dt;
+            this.rope.height += this.speed * dt;
+            this.claw.y -= this.speed * dt;
         } else if(cc.dm.animState.idle === this.animState){
             this.node.rotation += this.rotateVelocity * dt;
             if(Math.abs(this.node.rotation) >= this.rotationMaxAngle )
                 this.rotateVelocity *= -1;
-        } else if(cc.dm.animState.pullNone === this.animState){
-            this.rope.height -= this.expandSpeed * dt;
-            this.claw.y += this.expandSpeed * dt;
+        } else if(cc.dm.animState.pullNone === this.animState ||
+            cc.dm.animState.pull === this.animState){
+            this.rope.height -= this.speed * dt;
+            this.claw.y += this.speed * dt;
 
             if(this.rope.height < this.minRopeLength){
                 // 恢复准备状态
@@ -108,8 +106,9 @@ let tooljs = cc.Class({
                 }
 
                 this.animState =  cc.dm.animState.idle;
+                this.speed = this.expandSpeed;                
             }
-        } 
+        }
     },
 });
 

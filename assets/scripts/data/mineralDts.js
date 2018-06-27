@@ -11,27 +11,39 @@
 let mineral ={
     mineralArray:[
         {
-            id: 1,
-            name: 'gold',
-            score: 20,
-            pullSpeed: 10,
-        },
-        {
-            id: 2,
-            name: 'stone',
-            score: 0,
-            pullSpeed: 40,
-        },
-        {
-            id: 3,
+            tag: 1,
             name: 'diamond',
             score: 60,
+            pullSpeed: 190,
+        },
+        {
+            tag: 2,
+            name: 'gold-0',
+            score: 20,
+            pullSpeed: 120,
+        },
+        {
+            tag: 3,
+            name: 'gold-1',
+            score: 15,
+            pullSpeed: 110,
+        },
+        {
+            tag: 4,
+            name: 'stone-0',
+            score: 0,
+            pullSpeed: 20,
+        },
+        {
+            tag: 5,
+            name: 'stone-1',
+            score: 0,
             pullSpeed: 10,
         },
     
     ],
-    getMineralById(id){
-        return this.mineralArray[id];
+    getMineralByTag(tag){
+        return this.mineralArray[tag-1];
     },
     getMineralSize(){
         return this.mineralArray.length;

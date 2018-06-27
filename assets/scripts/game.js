@@ -11,7 +11,13 @@
 cc.Class({
     extends: cc.Component,
 
-    properties: {     
+    properties: {    
+        stonePrefabs:{
+            default:[],
+            type:cc.Prefab,
+        },
+        maxMineralHeight:0,
+        spawnRate:0,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -25,11 +31,36 @@ cc.Class({
         cc.dm = {};
         cc.dm.mineralDts = require('mineralDts');
         cc.dm.animState = require('enums');
+
+        this.spawnNewStones();
     },
 
     start () {
 
     },
 
+    spawnNewStone(){
+        var newStone = cc.instantiate(this.stonePrefab);
+        this.node.getChildByName('mineralMgr').addChild(newStone);
+        newStone.setPosition(this.getNewStonePosition());
+    },
+
+    spawnNewStones(){
+        for(let i = 0; i < this.spawnRate; i++ ){
+            let index = Math.floor(cc.random0To1() * this.stonePrefabs.length);
+            var newStone = cc.instantiate(this.stonePrefabs[index]);
+
+            newStone.parent = this.node.getChildByName('mineralMgr');
+            newStone.setPosition(this.getNewStonePosition());            
+        }
+    },
+
+    getNewStonePosition(){
+        var randX = 0;
+        var randY = cc.random0To1() * this.maxMineralHeight + 10;
+        var maxX = this.node.width;
+        randX = cc.random0To1() * maxX;
+        return cc.p(randX,randY);
+    },
     // update (dt) {},
 });
